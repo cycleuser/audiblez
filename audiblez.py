@@ -167,7 +167,10 @@ def cli_main():
         print('wget https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files/kokoro-v0_19.onnx')
         print('wget https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files/voices.json')
         sys.exit(1)
+    # kokoro = Kokoro('kokoro-v0_19.onnx', 'voices.json')
     kokoro = Kokoro('kokoro-v0_19.onnx', 'voices.json')
+    kokoro.sess.set_providers(['CUDAExecutionProvider', 'CPUExecutionProvider'])
+
     voices = list(kokoro.get_voices())
     voices_str = ', '.join(voices)
     epilog = 'example:\n' + \
@@ -176,6 +179,7 @@ def cli_main():
     parser = argparse.ArgumentParser(epilog=epilog, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('epub_file_path', help='Path to the epub file')
     parser.add_argument('-l', '--lang', default='en-gb', help='Language code: en-gb, en-us, fr-fr, ja, ko, cmn')
+    # parser.add_argument('-l', '--lang', default='cmn', help='Language code: en-gb, en-us, fr-fr, ja, ko, cmn, zh-CN')
     parser.add_argument('-v', '--voice', default=default_voice, help=f'Choose narrating voice: {voices_str}')
     parser.add_argument('-p', '--pick', default=False, help=f'Manually select which chapters to read in the audiobook',
                         action='store_true')
@@ -189,3 +193,4 @@ def cli_main():
 
 if __name__ == '__main__':
     cli_main()
+
