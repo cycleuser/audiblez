@@ -196,8 +196,8 @@ def audiblez(kokoro, file_path, lang, voice, pick_manually, speed):
         progress = int((total_chars - remaining_chars) / total_chars * 100)
         print('Progress:', f'{progress}%')
         i += 1
-    if has_ffmpeg:
-        create_m4b(chapter_mp3_files, filename, title, creator)
+    # if has_ffmpeg:
+    #     create_m4b(chapter_mp3_files, filename, title, creator)
 
 
 
