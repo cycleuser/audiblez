@@ -207,8 +207,9 @@ def audiblez(kokoro, file_path, lang, voice, pick_manually, speed):
 UI_TEXTS = {
     "en": {
         "window_title": "Audiblez GUI",
-        "no_file_selected": "No file selected",
+        "no_file_selected": "No EPUB file selected",
         "select_epub": "Select EPUB File",
+        "rest_epub": "Reset EPUB File",
         "label_interface_lang": "Interface language:",
         "label_tts_lang": "Select TTS language:",
         "label_voice": "Select voice:",
@@ -220,8 +221,9 @@ UI_TEXTS = {
     },
     "zh": {
         "window_title": "Audiblez图形界面",
-        "no_file_selected": "未选择文件",
+        "no_file_selected": "未选择EPUB文件",
         "select_epub": "选择EPUB文件",
+        "rest_epub": "重置EPUB文件",
         "label_interface_lang": "界面语言:",
         "label_tts_lang": "选择语音合成语言:",
         "label_voice": "选择声音:",
@@ -314,6 +316,12 @@ class AudiblezGUI(QMainWindow):
         self.select_button.clicked.connect(self.select_epub)
         self.toolbar.addWidget(self.select_button)
 
+        # 清空按钮
+        self.reset_button = QPushButton(UI_TEXTS[self.current_ui_lang]["rest_epub"]) # Add reset button
+        self.reset_button.clicked.connect(self.reset_selection)  # Connect reset functionality
+        self.toolbar.addWidget(self.reset_button)
+
+
         # 界面语言下拉
         self.ui_lang_combo = QComboBox()
         self.ui_lang_combo.addItem("English", "en")
@@ -385,6 +393,7 @@ class AudiblezGUI(QMainWindow):
         self.current_ui_lang = lang_code
         self.setWindowTitle(texts["window_title"])
         self.select_button.setText(texts["select_epub"])
+        self.reset_button.setText(texts["rest_epub"])
         self.run_button.setText(texts["generate"])
 
         self.msg_no_epub = texts["msg_no_epub"]
@@ -426,6 +435,15 @@ class AudiblezGUI(QMainWindow):
             self.epub_file_path = epub_file
             full_text = self.extract_epub_text(epub_file)
             self.web_view.setHtml(full_text)
+
+    def reset_selection(self):
+        """
+        Clear the current selection and stop background tasks.
+        """        
+        no_file_html = f"<html><body><p>{UI_TEXTS[self.current_ui_lang]['no_file_selected']}</p></body></html>"
+        self.web_view.setHtml(no_file_html)
+        self.epub_file_path = None
+        self.current_selection = None
 
     def extract_epub_text(self, epub_file):
         """
