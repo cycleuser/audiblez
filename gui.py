@@ -414,6 +414,7 @@ class AudiblezGUI(QMainWindow):
         """
         Opens a file dialog to select an EPUB file and displays its content.
         """
+        self.web_view.setHtml("<html><body></body></html>")
         epub_file, _ = QFileDialog.getOpenFileName(
             self,
             self.select_button.text(),
