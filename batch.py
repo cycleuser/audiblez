@@ -9,5 +9,5 @@ os.chdir(current_directory)
 
 for filename in os.listdir('.'):
     if filename.lower().endswith('.epub'):
-        cmd = ["audiblez", filename, "-l", "en-gb", "-v", "af_sky", "-s", "1.5"]
+        cmd = ["audiblez", filename, "-l", "en-gb", "-v", "af_sky", "-s", "1.0"]
         subprocess.run(cmd)
