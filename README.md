@@ -46,6 +46,8 @@ python gui.py # This will run the GUI version with epub showing
 python app.py # This will run the GUI version without epub showing
 ```
 
+![](img/gui.png)
+
 This will only generate wav files, you can convert them to m4b with ffmpeg later if you want to.
 
 ## Supported Languages

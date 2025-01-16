@@ -9,3 +9,4 @@ epub
 *.onnx
 dist
 espeak-ng-data-v1.51.tar.gz
+*.epub
