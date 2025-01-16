@@ -42,6 +42,9 @@ It will only produce the `.m4b` file if you have `ffmpeg` installed on your mach
 The GUI version is a simple GUI that allows you to select the book, the language and the voice, and then it will convert the book into an audiobook.
 
 ```Bash
+git clone https://github.com/cycleuser/audiblez/
+cd audiblez
+pip install requirements.txt
 python gui.py # This will run the GUI version with epub showing
 python app.py # This will run the GUI version without epub showing
 ```

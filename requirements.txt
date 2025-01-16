@@ -1,0 +1,7 @@
+soundfile
+ebooklib
+beautifulsoup4
+kokoro-onnx
+pydub
+pick
+PySide6

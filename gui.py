@@ -1,4 +1,5 @@
 # PySide6-based GUI for Audiblez with UI language switching and multi-threaded processing
+# pip install soundfile ebooklib beautifulsoup4 kokoro-onnx pydub pick PySide6
 
 import argparse
 import sys
