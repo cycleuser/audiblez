@@ -55,6 +55,10 @@ def main(kokoro, file_path, lang, voice, pick_manually, speed):
             print(f'File for chapter {i} already exists. Skipping')
             i += 1
             continue
+        if len(text.strip()) < 10:
+            print(f'Skipping empty chapter {i}')
+            i += 1
+            continue
         print(f'Reading chapter {i} ({len(text):,} characters)...')
         if i == 1:
             text = intro + '.\n\n' + text
@@ -99,6 +103,9 @@ def is_chapter(c):
     ch = r"ch\d{1,3}"
     if re.search(ch, name):
         return True
+    chap = r"chap\d{1,3}"
+    if re.search(chap, name):
+        return True
     if 'chapter' in name:
         return True
 
@@ -117,7 +124,7 @@ def find_chapters(book, verbose=False):
 
 
 def pick_chapters(book):
-    all_chapters_names = [c.get_name() for c in book.get_items()]
+    all_chapters_names = [c.get_name() for c in book.get_items() if c.get_type() == ebooklib.ITEM_DOCUMENT]
     title = 'Select which chapters to read in the audiobook'
     selected_chapters_names = pick(all_chapters_names, title, multiselect=True, min_selection_count=1)
     selected_chapters_names = [c[0] for c in selected_chapters_names]
@@ -181,9 +188,9 @@ def cli_main():
     parser.add_argument('-l', '--lang', default='en-gb', help='Language code: en-gb, en-us, fr-fr, ja, ko, cmn')
     # parser.add_argument('-l', '--lang', default='cmn', help='Language code: en-gb, en-us, fr-fr, ja, ko, cmn, zh-CN')
     parser.add_argument('-v', '--voice', default=default_voice, help=f'Choose narrating voice: {voices_str}')
-    parser.add_argument('-p', '--pick', default=False, help=f'Manually select which chapters to read in the audiobook',
+    parser.add_argument('-p', '--pick', default=False, help=f'Interactively select which chapters to read in the audiobook',
                         action='store_true')
-    parser.add_argument('-s', '--speed', default=1.0, help=f'Set speed from 0.5 to 2.0',type=float)
+    parser.add_argument('-s', '--speed', default=1.0, help=f'Set speed from 0.5 to 2.0', type=float)
     if len(sys.argv) == 1:
         parser.print_help(sys.stderr)
         sys.exit(1)
